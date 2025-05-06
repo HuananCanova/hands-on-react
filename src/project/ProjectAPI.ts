@@ -39,11 +39,11 @@ function parseJson(response: Response){
 
 
 //eslint-disable-next-line
-/* function delay(ms: number) {
+ function delay(ms: number) {
     return function (x: any): Promise<any> {
         return new Promise((resolve) => setTimeout(() => resolve(x), ms))
     };
-} */
+}
 
 function convertToProjectModels(data: any[]): Project[] {
     let projects: Project[] = data.map(convertToProjectModel);
@@ -59,6 +59,7 @@ function convertToProjectModel(item: any): Project {
 const projectAPI = {
     get(page = 1, limit = 20) {
         return fetch(`${url}?_page=${page}&_limit=${limit}&_sort=name`)
+        .then(delay(2027))
         .then(checkStatus)
         .then(parseJson)
         .then(convertToProjectModels)
@@ -78,6 +79,7 @@ const projectAPI = {
                 'Content-Type': 'application/json'
             }
         })
+        .then(delay(2027))
         .then(checkStatus)
         .then(parseJson)
         .catch((error: TypeError) => {
