@@ -1,5 +1,5 @@
 import { Project } from './Project';
-
+import { Link } from 'react-router-dom';
 
 function formatDescription(description: string): string {
   return description.substring(0, 60) + '...';
@@ -7,24 +7,27 @@ function formatDescription(description: string): string {
 
 interface ProjectCardProps {
   project: Project;
+  onEdit: (project: Project) => void;
 }
 
 function ProjectCard(props: ProjectCardProps) {
-  const { project } = props;
+  const { project, onEdit } = props;
   
   const handleEditClick = (projectBeingEdited: Project) => {
-    console.log(projectBeingEdited);
+    onEdit(projectBeingEdited);
   }
 
   return (
     <div className="card">
       <img src={project.imageUrl} alt={project.name} />
       <section className="section dark">
-        <h5 className="strong">
-          <strong>{project.name}</strong>
-        </h5>
-        <p>{formatDescription(project.description)}</p>
-        <p>Budget : {project.budget.toLocaleString()}</p>
+        <Link to={'/projects/' + project.id}>
+          <h5 className="strong">
+            <strong>{project.name}</strong>
+          </h5>
+          <p>{formatDescription(project.description)}</p>
+          <p>Budget : {project.budget.toLocaleString()}</p>
+        </Link>
       </section>
       <button className="bordered" onClick={() => { 
         handleEditClick(project)
