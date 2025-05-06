@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { MOCK_PROJECTS } from "./MockProjects";
+//import { MOCK_PROJECTS } from "./MockProjects";
 import { Project } from "./Project";
 import ProjectList from "./ProjectList";
 import { projectAPI } from "./ProjectAPI";

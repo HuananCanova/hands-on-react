@@ -39,11 +39,11 @@ function parseJson(response: Response){
 
 
 //eslint-disable-next-line
-function delay(ms: number) {
+/* function delay(ms: number) {
     return function (x: any): Promise<any> {
         return new Promise((resolve) => setTimeout(() => resolve(x), ms))
     };
-}
+} */
 
 function convertToProjectModels(data: any[]): Project[] {
     let projects: Project[] = data.map(convertToProjectModel);
@@ -88,6 +88,12 @@ const projectAPI = {
         });
     },
 
+    find(id: number) {
+        return fetch(`${url}/${id}`)
+        .then(checkStatus)
+        .then(parseJson)
+        .then(convertToProjectModel)
+    },
 
 
 }
