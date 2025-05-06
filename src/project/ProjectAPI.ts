@@ -1,5 +1,5 @@
 import { Project } from "./Project";
-const baseUrl = "http:localhost/4000";
+const baseUrl = "http://localhost:4000";
 const url = `${baseUrl}/projects`;
 
 function translateStatusToErrorMessage(status: number){
@@ -54,10 +54,11 @@ function convertToProjectModel(item: any): Project {
     return new Project(item);
 }
 
+
+//HTTP requests for the api
 const projectAPI = {
     get(page = 1, limit = 20) {
         return fetch(`${url}?_page=${page}&_limit=${limit}&_sort=name`)
-        .then(delay(600))
         .then(checkStatus)
         .then(parseJson)
         .then(convertToProjectModels)
@@ -67,5 +68,28 @@ const projectAPI = {
                 "there was an error retrieving projects"
             )
         })
-    }
+    },
+    //PUT ENDPOINT
+    put(project: Project) {
+        return fetch(`${url}/${project.id}`, {
+            method: 'PUT',
+            body: JSON.stringify(project),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(checkStatus)
+        .then(parseJson)
+        .catch((error: TypeError) => {
+            console.log('log client error: ' + error);
+            throw new Error (
+                'There was an excpetion while updating the projects.'
+            );
+        });
+    },
+
+
+
 }
+
+export { projectAPI };
